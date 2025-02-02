@@ -112,14 +112,23 @@ const { title, description, image = "/nano.png" } = Astro.props;
   }
 
   function animate() {
-    const animateElements = document.querySelectorAll(".animate");
+  const animateElements = document.querySelectorAll(".animate");
+  // Преобразуем NodeList в массив
+  const elementsArray = Array.from(animateElements);
 
-    animateElements.forEach((element, index) => {
-      setTimeout(() => {
-        element.classList.add("show");
-      }, index * 50);
-    });
+  // Перемешиваем массив (алгоритм Фишера–Йетса)
+  for (let i = elementsArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [elementsArray[i], elementsArray[j]] = [elementsArray[j], elementsArray[i]];
   }
+
+  // Применяем задержку и добавляем класс "show" в случайном порядке
+  elementsArray.forEach((element, index) => {
+    setTimeout(() => {
+      element.classList.add("show");
+    }, index * 50);
+  });
+}
 
   function onScroll() {
     if (window.scrollY > 0) {
